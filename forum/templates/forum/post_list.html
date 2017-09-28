@@ -1,0 +1,15 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.timestamp }}
+            </div>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.post_id }}: {{ post.post_subject }}</a></h1>
+            <p>{{ post.post_content|linebreaksbr }}</p>
+            <p>by:{{ post.avatar_id }}</p>
+            <p>level:{{ post.level }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

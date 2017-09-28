@@ -1,0 +1,49 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+    <div class="post">
+        <div class="date">
+            {{ post.timestamp }}
+        </div>
+        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <h1>{{ post.post_id }}: {{ post.post_subject }}</h1>
+        <p>{{ post.post_content|linebreaksbr }}</p>
+        <p>by:{{ post.avatar_id|linebreaksbr }}</p>
+        <p>parent id:{{ post.parent_id|linebreaksbr }}</p>
+        <p>level:{{ post.level }}</p>
+    </div>
+    <a class="btn btn-default" href="{% url 'add_answer_to_post' pk=post.pk %}">Reply</a>
+    <hr>
+    {% for post in post.parentID.all %}
+        <div class="post">
+            <div class="content">
+                <div class="date">{{ post.timestamp }}</div>
+                <strong>{{ post.post_id }}</strong>
+                <p>{{ post.post_content|linebreaksbr }}</p>
+                <p>by:{{ post.avatar_id }}</p>
+                <p>parent id:{{ post.parent_id }}</p>
+                <p>level:{{ post.level }}</p>
+                <a class="btn btn-default" href="{% url 'add_answer_to_post' pk=post.pk %}">Reply</a>
+                <hr>
+            </div>
+        </div>
+                {% for post in post.parentID.all %}
+                <div class="post">
+                    <div class="content">
+                        <div class="content">
+                            <div class="date">{{ post.timestamp }}</div>
+                            <strong>{{ post.post_id }}</strong>
+                            <p>{{ post.post_content|linebreaksbr }}</p>
+                            <p>by:{{ post.avatar_id }}</p>
+                            <p>parent id:{{ post.parent_id }}</p>
+                            <p>level:{{ post.level }}</p>
+                            <a class="btn btn-default" href="{% url 'add_answer_to_post' pk=post.pk %}">Reply</a>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    {% empty %}
+        <p>No answers here yet :(</p>
+    {% endfor %}
+{% endblock %}
